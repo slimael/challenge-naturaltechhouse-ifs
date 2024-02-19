@@ -1,0 +1,144 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Challenge POkemon",
+        "description": "## API ",
+        "version": "1.0.0",
+        "contact": {
+            "email": "ifsalas2@gmail.com"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "Desarrollo"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Pokemon",
+            "description": "Info about pokemons"
+        }
+    ],
+    "paths": {
+        "/pokemon/": {
+            "get": {
+                "tags": [
+                    "Pokemon"
+                ],
+                "summary": "Return a list of pokemons with content parsed",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "type": "string",
+                        "description": "string must be a name or a type of pokemon",
+                        "required": false,
+                        "example": "bulbasaur"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "type": "string",
+                        "description": "integer must be a page number",
+                        "required": false,
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/PokemonData"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalError"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "GatewayError": {
+                "description": "Gateway error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "example": {
+                                "error": {
+                                    "code": 502,
+                                    "message": "External api response with error."
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "NotFound": {
+                "description": "Not found ",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "example": {
+                                "error": {
+                                    "code": 404,
+                                    "message": "Not found."
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "InternalError": {
+                "description": "Internal error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "example": {
+                                "error": {
+                                    "code": 500,
+                                    "message": "Error description"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "PokemonData": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "example": {
+                                "totalPage": 1,
+                                "pokemons": [
+                                    {
+                                        "name": "Pikachu",
+                                        "abilities": [
+                                            {
+                                                "name": "overgrow"
+                                            }
+                                        ],
+                                        "types": [
+                                            {
+                                                "name": "overgrow"
+                                            }
+                                        ],
+                                        "stats": [
+                                            {
+                                                "name": "overgrow",
+                                                "base": 5
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

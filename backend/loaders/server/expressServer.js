@@ -14,7 +14,7 @@ class ExpressServer {
 
     this._middlewares();
 
-    // this._swaggerConfig();
+    this._swaggerConfig();
 
     this._routes();
 
@@ -67,13 +67,13 @@ class ExpressServer {
     });
   }
 
-  // _swaggerConfig() {
-  //   this.app.use(
-  //     config.swagger.path,
-  //     swaggerUi.serve,
-  //     swaggerUi.setup(require("../swagger/swagger.json"))
-  //   );
-  // }
+  _swaggerConfig() {
+    this.app.use(
+      config.swagger.path,
+      swaggerUi.serve,
+      swaggerUi.setup(require("../swagger/swagger.json"))
+    );
+  }
 
   async start() {
     this.app.listen(this.port, (error) => {
