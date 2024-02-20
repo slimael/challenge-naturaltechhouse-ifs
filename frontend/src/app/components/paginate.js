@@ -4,26 +4,26 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { generatePagination } from '../../app/lib/utils';
 
-export default function Pagination({ totalPages }) {
-    const currentPage = 1;
+export default function Pagination({ totalPages, currentPage }) {
+  console.log(currentPage, 'currentPage')
   const allPages = generatePagination(currentPage, totalPages);
   const createPageURL = (page) => {
     const searchParams = new URLSearchParams(window.location.search);
     searchParams.set('page', page);
     return `${window.location.pathname}?${searchParams.toString()}`;
   }
-  let position= 'first';
+  let position = 'first';
   return (
     <>
-      
-      { <div className="inline-flex">
+
+      {<div className="inline-flex">
         <PaginationArrow
           direction="left"
           href={createPageURL(currentPage - 1)}
           isDisabled={currentPage <= 1}
         />
 
-        <div className="flex -space-x-px">
+        {/* <div className="flex -space-x-px">
           {allPages.map((page, index) => {
 
             if (index === 0) position = 'first';
@@ -41,14 +41,14 @@ export default function Pagination({ totalPages }) {
               />
             );
           })}
-        </div>
+        </div> */}
 
         <PaginationArrow
           direction="right"
           href={createPageURL(currentPage + 1)}
           isDisabled={currentPage >= totalPages}
         />
-      </div> }
+      </div>}
     </>
   );
 }
@@ -98,7 +98,7 @@ function PaginationArrow({
     direction === 'left' ? (
       <div className="w-4" > {"<"} </div>
     ) : (
-        <div className="w-4" > {">"} </div>
+      <div className="w-4" > {">"} </div>
     );
 
   return isDisabled ? (

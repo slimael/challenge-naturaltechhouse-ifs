@@ -1,10 +1,12 @@
 'use client';
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-export default function Search ({placeholder}) {
+import { useDebouncedCallback } from "use-debounce";
+
+export default function Search({ placeholder, onHandleSearch }) {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
-    const handleSearch = (e) => {
+    const handleSearch = useDebouncedCallback((e) => {
         const params = new URLSearchParams(searchParams);
         const search = e.target.value;
         if (!search) {
@@ -12,12 +14,14 @@ export default function Search ({placeholder}) {
         } else {
             params.set('search', search);
         }
+        params.set('page', 1);
         router.replace(`${pathname}?${params.toString()}`);
-        
-    }
+
+
+    }, 900)
     return (
         <div>
-            <input onChange={(e) => {handleSearch(e)}} type="search" placeholder={placeholder} className="p-3 border border-gray-300 rounded-md" />
+            <input onChange={(e) => { handleSearch(e) }} type="search" placeholder={placeholder} className="p-3 border text-gray-600 border-gray-300 rounded-md" />
         </div>
     )
 }
