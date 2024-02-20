@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { generatePagination } from '../../app/lib/utils';
 
 export default function Pagination({ totalPages, currentPage }) {
-  console.log(currentPage, 'currentPage')
   const allPages = generatePagination(currentPage, totalPages);
   const createPageURL = (page) => {
     const searchParams = new URLSearchParams(window.location.search);

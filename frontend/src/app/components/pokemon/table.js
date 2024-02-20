@@ -8,17 +8,11 @@ import Link from "next/link";
 import Loading from "../loading";
 const API = "http://localhost:8080/pokemon/";
 export default function Table({ }) {
-    // console.log(data)
-
-    const router = usePathname();
-
     const searchParams = useSearchParams();
     const params = new URLSearchParams(searchParams);
     const search = params.get('search') || '';
     const page = Number(params.get('page')) || 1;
 
-    console.log(search, 'page=======')
-    console.log(params, 'params=======')
     const fetcher = url => fetch(`${API}?search=${search}&page=${page}`).then(r => r.json())
     const { data, error, isLoading } = useSWR(`/api/data/${search}/${page}`, fetcher);
 
@@ -26,7 +20,6 @@ export default function Table({ }) {
     
     if (!data || isLoading) return  (<Loading />);
     const { pokemons, totalPages } = data;
-    console.log(totalPages, 'totalPages')
     if (!pokemons) {
         return "No results found";
     }
