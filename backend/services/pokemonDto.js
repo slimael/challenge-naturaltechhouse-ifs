@@ -5,6 +5,7 @@ const pokemonDto = (pokemonData) =>{
           abilities: abilitiesDto(pokemon.abilities),
           types: typesDto(pokemon.types),
           stats: statsDto(pokemon.stats),
+          image: pokemon.sprites.front_default
         };
       });
       return data    
