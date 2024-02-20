@@ -17,8 +17,8 @@ export default function Table({ }) {
     const { data, error, isLoading } = useSWR(`/api/data/${search}/${page}`, fetcher);
 
     if (error) return "An error has occurred.";
-    
-    if (!data || isLoading) return  (<Loading />);
+
+    if (!data || isLoading) return (<Loading />);
     const { pokemons, totalPages } = data;
     if (!pokemons) {
         return "No results found";
@@ -26,14 +26,17 @@ export default function Table({ }) {
     const cards = pokemons?.map((pokemon, index) => {
         return (
 
-            <div className="p-4 relative">
+            <div className="p-4 relative" key={`${pokemon.name}${index}`}>
                 <div className="max-w-sm rounded overflow-hidden shadow-lg bg-gray-50 transition-opacity duration-900 ">
                     {/* <img className="w-full" src="imagen.jpg" alt="Imagen"> */}
-                    <img
-                        alt={pokemon.name}
-                        className="absolute top-5 right-10 w-50 h-55 object-cover opacity-30"
-                        src={pokemon.image}
-                    />
+                    <picture>
+                        <img
+                            key={pokemon.key}
+                            alt={pokemon.name}
+                            className="absolute top-5 right-10 w-50 h-55 object-cover opacity-30"
+                            src={pokemon.image}
+                        />
+                    </picture>
                     <div className="px-6 py-4">
                         <div className="font-bold text-xl mb-2 text-gray-900 uppercase">
                             <Link key={pokemon.name} href={`/${pokemon.name}`}>
@@ -51,7 +54,7 @@ export default function Table({ }) {
                         </ul>
                         <div>
                             {pokemon.types.map((type, index) => (
-                                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{type.name}</span>
+                                <span key={type.name} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{type.name}</span>
                             ))}
                         </div>
                     </div>

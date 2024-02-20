@@ -37,7 +37,7 @@ Primero, ingresar a la carpeta de Frontend en el projecto:
 $ cd challenge-naturaltechhouse/frontend
 ```
 
-Then install the dependencies:
+Instalar dependencia:
 
 ```sh
 $ npm install

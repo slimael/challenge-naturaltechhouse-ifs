@@ -3,6 +3,8 @@ import Link from "next/link";
 import useSWR, { SWRConfig } from "swr";
 import { useRouter } from "next/navigation";
 import Loading from "../components/loading";
+import Image from 'next/image'
+import { Suspense } from "react";
 const API = "http://localhost:8080/pokemon";
 function Details({ name }) {
     const fetcher = () => fetch(`${API}/${name}`).then((res) => res.json());
@@ -13,7 +15,7 @@ function Details({ name }) {
         router.back()
     }
     if (error) return "An error has occurred.";
-    if (!data ||isLoading) return <div className="bg-gray-100"><Loading /></div>;
+    if (!data || isLoading) return <div className="bg-gray-100"><Loading /></div>;
     const { pokemon } = data;
     const stats = pokemon.stats.map((stat, index) => (
         <li key={index} className="text-gray-700">
@@ -46,11 +48,14 @@ function Details({ name }) {
 
                 </h1>
                 <div className="relative">
-                    <img
-                        alt={pokemon.name}
-                        className="absolute  w-25  top-0 right-5 object-cover "
-                        src={pokemon.image}
-                    />
+                    <picture>
+                        <img
+                            key={pokemon.key}
+                            alt={pokemon.name}
+                            className="absolute  w-25  top-0 right-5 object-cover "
+                            src={pokemon.image}
+                        />
+                    </picture>
                 </div>
                 <section className="container">
                     <div class="mb-8">
@@ -85,9 +90,11 @@ function Details({ name }) {
 export default function PokemonDetails({ params: { name } }) {
     console.log(name, 'name')
     return (
-        <SWRConfig>
-            <Details name={name} />
+        <Suspense>
+            <SWRConfig>
+                <Details name={name} />
+            </SWRConfig>
+        </Suspense>
 
-        </SWRConfig>
     );
 }
