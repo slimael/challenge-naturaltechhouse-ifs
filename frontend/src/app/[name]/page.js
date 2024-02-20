@@ -2,6 +2,7 @@
 import Link from "next/link";
 import useSWR, { SWRConfig } from "swr";
 import { useRouter } from "next/navigation";
+import Loading from "../components/loading";
 const API = "http://localhost:8080/pokemon";
 function Details({ name }) {
     const fetcher = () => fetch(`${API}/${name}`).then((res) => res.json());
@@ -12,8 +13,7 @@ function Details({ name }) {
         router.back()
     }
     if (error) return "An error has occurred.";
-    if (!data) return "Loading...";
-    if (isLoading) return "Loading...";
+    if (!data ||isLoading) return <div className="bg-gray-100"><Loading /></div>;
     const { pokemon } = data;
     const stats = pokemon.stats.map((stat, index) => (
         <li key={index} className="text-gray-700">

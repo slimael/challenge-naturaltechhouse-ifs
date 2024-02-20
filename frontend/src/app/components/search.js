@@ -20,8 +20,8 @@ export default function Search({ placeholder, onHandleSearch }) {
 
     }, 900)
     return (
-        <div>
-            <input onChange={(e) => { handleSearch(e) }} type="search" placeholder={placeholder} className="p-3 border text-gray-600 border-gray-300 rounded-md" />
-        </div>
+        <>
+            <input onChange={(e) => { handleSearch(e) }} type="search" placeholder={placeholder} className="p-3 border text-gray-600 border-gray-300 rounded-md focus:border-red-500 active:border-red-500 focus-visible:border-red-500  " />
+        </>
     )
 }

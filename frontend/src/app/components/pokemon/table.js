@@ -5,6 +5,7 @@ import Pagination from "../paginate"
 import useSWR from "swr";
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Loading from "../loading";
 const API = "http://localhost:8080/pokemon/";
 export default function Table({ }) {
     // console.log(data)
@@ -22,8 +23,8 @@ export default function Table({ }) {
     const { data, error, isLoading } = useSWR(`/api/data/${search}/${page}`, fetcher);
 
     if (error) return "An error has occurred.";
-    if (!data) return "Loading...";
-    if (isLoading) return "Loading...";
+    
+    if (!data || isLoading) return  (<Loading />);
     const { pokemons, totalPages } = data;
     console.log(totalPages, 'totalPages')
     if (!pokemons) {
@@ -33,7 +34,7 @@ export default function Table({ }) {
         return (
 
             <div className="p-4 relative">
-                <div className="max-w-sm rounded overflow-hidden shadow-lg bg-gray-50 ">
+                <div className="max-w-sm rounded overflow-hidden shadow-lg bg-gray-50 transition-opacity duration-900 ">
                     {/* <img className="w-full" src="imagen.jpg" alt="Imagen"> */}
                     <img
                         alt={pokemon.name}
