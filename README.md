@@ -17,6 +17,10 @@ $ npm install
 #### Correr aplicacion
 
 ```sh
+$ npm run build
+```
+
+```sh
 $ npm run start
 ```
 
